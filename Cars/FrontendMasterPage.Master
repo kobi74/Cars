@@ -1,0 +1,59 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="FrontendMasterPage.master.cs" Inherits="Cars.FrontendMasterPage" %>
+
+<!DOCTYPE html>
+
+<html dir="rtl">
+<head runat="server">
+    <title>
+        <asp:ContentPlaceHolder ID="title" runat="server"></asp:ContentPlaceHolder>
+    </title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div id="main" class="container-fluid">
+        <div>
+            <div class="bg-danger text-white">
+                <h1 class="display-3 font-weight-bold text-center"> לקנות רכב מליסינג Cars <a href="index.aspx"><span><img src="../images/car.png" class="img-thumbnail float-right" /></span> </a></h1>
+            </div> 
+            <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="index.aspx">קניית רכב</a></li>
+                    <li class="nav-item"><a class=" nav-link" href="#">סניפים קרובים</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">מימון</a></li>
+                    <li class="nav-item"><a class="nav-link" href="About.aspx">אודות</a></li>
+                </ul>
+
+                <ul class="navbar-nav mr-auto">
+                     <li style="float:left;"><a style="background-color:#4CAF50;float:left;" class="btn btn-success navbar-brand" href="login.aspx">כניסה לעובדים</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="clear" style="clear:both"></div>
+        
+        <div id="content" class="text-right" style="height:730px;">
+            <asp:SiteMapPath ID="SiteMapPath1" runat="server" OnItemCreated="SiteMapPath1_ItemCreated" PathSeparator="&gt;">
+            </asp:SiteMapPath>
+			<asp:ContentPlaceHolder ID="contentBody" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+        <div class="clear" style="clear:both"></div>
+        <br />
+        <footer class="page-footer bg-dark blue" style="position:fixed;left: 0;bottom: 0;width: 100%;">
+          <!-- Copyright -->
+               <div class="text-white footer-copyright text-center py-3">האתר נבנה ע"י:
+                <a class="text-white" href="#"> קובי נבון</a>
+              </div>
+          <!-- Copyright -->
+        </footer>
+    </div>
+    </form>
+</body>
+</html>

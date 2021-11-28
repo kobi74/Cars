@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Cities>
+  <city>
+    <CityName>חיפה</CityName>
+    <CityID>חיפה</CityID>
+  </city>
+  <city>
+    <CityName>תל-אביב</CityName>
+    <CityID>תל-אביב</CityID>
+  </city>
+  <city>
+    <CityName>ירושלים</CityName>
+    <CityID>ירושלים</CityID>
+  </city>
+  <city>
+    <CityName>טבריה</CityName>
+    <CityID>טבריה</CityID>
+  </city>
+  <city>
+    <CityName>עפולה</CityName>
+    <CityID>עפולה</CityID>
+  </city>
+  <city>
+    <CityName>נתניה</CityName>
+    <CityID>נתניה</CityID>
+  </city>
+  <city>
+    <CityName>רעננה</CityName>
+    <CityID>רעננה</CityID>
+  </city>
+  <city>
+    <CityName>פתח-תקווה</CityName>
+    <CityID>פתח-תקווה</CityID>
+  </city>
+  <city>
+    <CityName>ראש העין</CityName>
+    <CityID>ראש העין</CityID>
+  </city>
+  <city>
+    <CityName>לוד</CityName>
+    <CityID>לוד</CityID>
+  </city>
+  <city>
+    <CityName>אשדוד</CityName>
+    <CityID>אשדוד</CityID>
+  </city>
+  <city>
+    <CityName>אשקלון</CityName>
+    <CityID>אשקלון</CityID>
+  </city>
+  <city>
+    <CityName>באר-שבע</CityName>
+    <CityID>באר-שבע</CityID>
+  </city>
+  <city>
+    <CityName>אילת</CityName>
+    <CityID>אילת</CityID>
+  </city>
+
+</Cities>

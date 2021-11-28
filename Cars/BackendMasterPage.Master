@@ -1,0 +1,80 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="BackendMasterPage.master.cs" Inherits="Cars.BackendMasterPage" %>
+
+<!DOCTYPE html>
+
+<html dir="rtl">
+<head runat="server">
+    <title>
+        <asp:ContentPlaceHolder ID="title" runat="server"></asp:ContentPlaceHolder>
+    </title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <style>
+        .dropdown-item:hover{
+            background-color:#5DADE2;
+            color:#FDFEFE;
+        }
+    </style>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div id="main" class="container-fluid">
+        <div>
+            <div class="bg-dark text-white">
+                <h1 class="display-3 font-weight-bold text-center"> לקנות רכב מליסינג Cars <span><img src="../images/car.png" class="img-thumbnail float-right" /></span> </h1>
+            </div> 
+            <nav class="navbar navbar-expand-sm bg-secondary navbar-dark">
+<%--                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="manufacturer.aspx">יצרן</a></li>
+                    <li class="nav-item"><a class=" nav-link" href="Line.aspx">דגם</a></li>
+                    <li class="nav-item"><a class="nav-link" href="Company.aspx">סוכנות ליסינג</a></li>
+                    <li class="nav-item"><a class="nav-link" href="CompanySite.aspx">סניף של סוכנות</a></li>
+                    <li class="nav-item"><a class="nav-link" href="cars.aspx">רכבים</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">דוחות</a></li>
+                </ul>--%>
+
+                <ul class="navbar-nav">
+                    <li class="nav-item"><asp:HyperLink ID="hlManufacturer" runat="server" class="nav-link" NavigateUrl="~/manufacturer.aspx">יצרן</asp:HyperLink></li>
+                    <li class="nav-item"><asp:HyperLink ID="hlLine" runat="server" class="nav-link" NavigateUrl="~/Line.aspx">דגם</asp:HyperLink></li>
+                    <li class="nav-item"><asp:HyperLink ID="hlCompany" runat="server" class="nav-link" NavigateUrl="~/Company.aspx">סוכנות ליסינג</asp:HyperLink></li>
+                    <li class="nav-item"><asp:HyperLink ID="hlCompanySite" runat="server" class="nav-link" NavigateUrl="~/CompanySite.aspx">סניף של סוכנות</asp:HyperLink></li>
+                    <li class="nav-item"><asp:HyperLink ID="hlCars" runat="server" class="nav-link" NavigateUrl="~/Cars.aspx">רכבים</asp:HyperLink></li>
+                    <li class="nav-item dropdown">
+                        <asp:HyperLink ID="hlReports" runat="server" class="nav-link dropdown-toggle" data-toggle="dropdown" NavigateUrl="#">דוחות</asp:HyperLink>
+                        <div class="dropdown-menu">
+                            <asp:HyperLink ID="hlManufacturerReport" runat="server" class="dropdown-item" NavigateUrl="~/ManufacturerReport.aspx">דוח יצרנים</asp:HyperLink>
+                            <asp:HyperLink ID="HyperLink2" runat="server" class="dropdown-item" NavigateUrl="~/MeetingsReport.aspx">דוח פגישות</asp:HyperLink>
+                            <asp:HyperLink ID="HyperLink3" runat="server" class="dropdown-item" NavigateUrl="~/SearchReport.aspx">דוח חיפושים</asp:HyperLink>
+                        </div>
+                    </li>
+                </ul>
+
+                <ul class="navbar-nav mr-auto">
+                     <li style="float:left;"><asp:label runat="server" ID="lblHello" Text=" " class="navbar-brand"/></li>
+                     <li style="float:left;"><a class="navbar-brand" href="Logout.aspx">יציאה</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="clear" style="clear:both"></div>
+        <div id="content" class="text-right" style="height:730px;">
+			<asp:ContentPlaceHolder ID="contentBody" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+        <div class="clear" style="clear:both"></div>
+        <footer class="page-footer bg-dark blue">
+          <!-- Copyright -->
+               <div class="text-white footer-copyright text-center py-3">האתר נבנה ע"י:
+                <a class="text-white" href="#"> קובי נבון</a>
+              </div>
+          <!-- Copyright -->
+        </footer>
+    </div>
+    </form>
+</body>
+</html>

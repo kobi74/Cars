@@ -1,0 +1,323 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Cars" Class="DBDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=NAVON-PC\SQLEXPRESSKOBI;Initial Catalog=Cars;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="CarsConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Cars" Member="Cars">
+    <Type Name="Car">
+      <Column Name="serialNumber" Type="System.String" DbType="VarChar(7) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="manufacturer_Name_Line" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="LineName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Year" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Color" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Class" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Fuel" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Engine" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Gearbox" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="NumOfKM" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Price" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DealershipName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="DealershipNameSite" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="CarPic" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="Car_Meeting" Member="Meetings" ThisKey="serialNumber" OtherKey="CarNumber" Type="Meeting" />
+      <Association Name="Car_MeetingsAboutCar" Member="MeetingsAboutCars" ThisKey="serialNumber" OtherKey="CarSerialNumber" Type="MeetingsAboutCar" />
+      <Association Name="DealerShipSite_Car" Member="DealerShipSite" ThisKey="DealershipName,DealershipNameSite" OtherKey="dealerShipName,CitySite" Type="DealerShipSite" IsForeignKey="true" />
+      <Association Name="Line_Car" Member="Line" ThisKey="manufacturer_Name_Line,LineName" OtherKey="ManufacturerName,Line1" Type="Line" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Users" Member="Users">
+    <Type Name="User">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FirstName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="LastName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="UserName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Password" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Column Name="Position" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DealerShip" Member="DealerShips">
+    <Type Name="DealerShip">
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="logo" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="DealerShip_DealerShipSite" Member="DealerShipSites" ThisKey="Name" OtherKey="dealerShipName" Type="DealerShipSite" />
+    </Type>
+  </Table>
+  <Table Name="dbo.DealerShipSites" Member="DealerShipSites">
+    <Type Name="DealerShipSite">
+      <Column Name="dealerShipName" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CitySite" Type="System.String" DbType="NVarChar(255) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="address" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="phone" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
+      <Association Name="DealerShipSite_Car" Member="Cars" ThisKey="dealerShipName,CitySite" OtherKey="DealershipName,DealershipNameSite" Type="Car" />
+      <Association Name="DealerShipSite_Meeting" Member="Meetings" ThisKey="dealerShipName,CitySite" OtherKey="DealershipName,DealrshipSite" Type="Meeting" />
+      <Association Name="DealerShip_DealerShipSite" Member="DealerShip" ThisKey="dealerShipName" OtherKey="Name" Type="DealerShip" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Line" Member="Lines">
+    <Type Name="Line">
+      <Column Name="ManufacturerName" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Line" Member="Line1" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="Line_Car" Member="Cars" ThisKey="ManufacturerName,Line1" OtherKey="manufacturer_Name_Line,LineName" Type="Car" />
+      <Association Name="Manufacturer_Line" Member="Manufacturer" ThisKey="ManufacturerName" OtherKey="Name" Type="Manufacturer" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Manufacturer" Member="Manufacturers">
+    <Type Name="Manufacturer">
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="Manufacturer_Line" Member="Lines" ThisKey="Name" OtherKey="ManufacturerName" Type="Line" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Meetings" Member="Meetings">
+    <Type Name="Meeting">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CustomerFirstName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="customerLastName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="customerPhone" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="DateOfMeeting" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="TimeOfMeeting" Type="System.TimeSpan" DbType="Time" CanBeNull="true" />
+      <Column Name="DealershipName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="DealrshipSite" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="CarNumber" Type="System.String" DbType="VarChar(7)" CanBeNull="true" />
+      <Association Name="Meeting_MeetingsAboutCar" Member="MeetingsAboutCars" ThisKey="ID" OtherKey="MeetingID" Type="MeetingsAboutCar" />
+      <Association Name="DealerShipSite_Meeting" Member="DealerShipSite" ThisKey="DealershipName,DealrshipSite" OtherKey="dealerShipName,CitySite" Type="DealerShipSite" IsForeignKey="true" />
+      <Association Name="Car_Meeting" Member="Car" ThisKey="CarNumber" OtherKey="serialNumber" Type="Car" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MeetingsAboutCars" Member="MeetingsAboutCars">
+    <Type Name="MeetingsAboutCar">
+      <Column Name="MeetingID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CarSerialNumber" Type="System.String" DbType="VarChar(7) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="Car_MeetingsAboutCar" Member="Car" ThisKey="CarSerialNumber" OtherKey="serialNumber" Type="Car" IsForeignKey="true" />
+      <Association Name="Meeting_MeetingsAboutCar" Member="Meeting" ThisKey="MeetingID" OtherKey="ID" Type="Meeting" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SearchLog" Member="SearchLogs">
+    <Type Name="SearchLog">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ipAddress" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Manufacturer" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Line" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Color" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="FromYear" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ToYear" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="fromPrice" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ToPrice" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MinKM" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MaxKM" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Fuel" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="engine" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="gearbox" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.vmMeetingsReport" Member="vmMeetingsReports">
+    <Type Name="vmMeetingsReport">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CustomerFirstName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="customerLastName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="DateOfMeeting" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="TimeOfMeeting" Type="System.TimeSpan" DbType="Time" CanBeNull="true" />
+      <Column Name="DealershipName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="DealrshipSite" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="carnumber" Type="System.String" DbType="VarChar(7)" CanBeNull="true" />
+      <Column Name="manufacturer_Name_Line" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="LineName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Year" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.vwCountManufacturer" Member="vwCountManufacturers">
+    <Type Name="vwCountManufacturer">
+      <Column Name="[שם יצרן]" Member="שם_יצרן" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="כמות" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Function Name="dbo.CarsUpdate" Method="CarsUpdate">
+    <Parameter Name="SerialNumber" Parameter="serialNumber" Type="System.String" DbType="VarChar(7)" />
+    <Parameter Name="OldSerialNumber" Parameter="oldSerialNumber" Type="System.String" DbType="VarChar(7)" />
+    <Parameter Name="Manufacturer" Parameter="manufacturer" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="Line" Parameter="line" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="Year" Parameter="year" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Color" Parameter="color" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="Class" Parameter="class" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="Fuel" Parameter="fuel" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="Engine" Parameter="engine" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Gearbox" Parameter="gearbox" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="NumOfKM" Parameter="numOfKM" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Price" Parameter="price" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Dealership" Parameter="dealership" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="Site" Parameter="site" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="CarPic" Parameter="carPic" Type="System.String" DbType="NVarChar(MAX)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.spUpdateManufacturer" Method="spUpdateManufacturer">
+    <Parameter Name="newName" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="oldName" Type="System.String" DbType="NVarChar(50)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.DealershipDelete" Method="DealershipDelete">
+    <Parameter Name="DealerName" Parameter="dealerName" Type="System.String" DbType="NVarChar(50)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.DealershipSearch" Method="DealershipSearch">
+    <Parameter Name="Dname" Parameter="dname" Type="System.String" DbType="NVarChar(50)" />
+    <ElementType Name="DealershipSearchResult">
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="logo" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.DealerShipSitesDelete" Method="DealerShipSitesDelete">
+    <Parameter Name="OldDealerName" Parameter="oldDealerName" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="OldCity" Parameter="oldCity" Type="System.String" DbType="NVarChar(255)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.DealerShipSitesSearch" Method="DealerShipSitesSearch">
+    <Parameter Name="Dname" Parameter="dname" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="Dsite" Parameter="dsite" Type="System.String" DbType="NVarChar(255)" />
+    <ElementType Name="DealerShipSitesSearchResult">
+      <Column Name="dealerShipName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="CitySite" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+      <Column Name="address" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="phone" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.DealerShipSitesUpdate" Method="DealerShipSitesUpdate">
+    <Parameter Name="OldDealerName" Parameter="oldDealerName" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="OldCity" Parameter="oldCity" Type="System.String" DbType="NVarChar(255)" />
+    <Parameter Name="NewDealerName" Parameter="newDealerName" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="NewCity" Parameter="newCity" Type="System.String" DbType="NVarChar(255)" />
+    <Parameter Name="NewAddress" Parameter="newAddress" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="NewPhone" Parameter="newPhone" Type="System.String" DbType="NVarChar(10)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.deleteManufacturer" Method="deleteManufacturer">
+    <Parameter Name="name" Type="System.String" DbType="NVarChar(50)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.getDealership" Method="getDealership">
+    <ElementType Name="getDealershipResult">
+      <Column Name="name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.getDealershipSite" Method="getDealershipSite">
+    <Parameter Name="name" Type="System.String" DbType="NVarChar(50)" />
+    <ElementType Name="getDealershipSiteResult">
+      <Column Name="CitySite" Type="System.String" DbType="NVarChar(255) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.LineSearch" Method="LineSearch">
+    <Parameter Name="Manufacturer" Parameter="manufacturer" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="Line" Parameter="line" Type="System.String" DbType="NVarChar(50)" />
+    <ElementType Name="LineSearchResult">
+      <Column Name="ManufacturerName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Line" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spDealershipUpdate" Method="spDealershipUpdate">
+    <Parameter Name="NewName" Parameter="newName" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="OldName" Parameter="oldName" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="NewLogo" Parameter="newLogo" Type="System.String" DbType="NVarChar(MAX)" />
+    <Parameter Name="OldLogo" Parameter="oldLogo" Type="System.String" DbType="NVarChar(MAX)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.spGetLine" Method="spGetLine">
+    <Parameter Name="name" Type="System.String" DbType="NVarChar(50)" />
+    <ElementType Name="spGetLineResult">
+      <Column Name="line" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spGetManufacturer" Method="spGetManufacturer">
+    <ElementType Name="spGetManufacturerResult">
+      <Column Name="NAME" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.spLineDelete" Method="spLineDelete">
+    <Parameter Name="ManufacturerDelete" Parameter="manufacturerDelete" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="lineDelete" Type="System.String" DbType="NVarChar(50)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.spLineUpdate" Method="spLineUpdate">
+    <Parameter Name="NewManufacturer" Parameter="newManufacturer" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="OldManufacturer" Parameter="oldManufacturer" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="NewLine" Parameter="newLine" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="OldLine" Parameter="oldLine" Type="System.String" DbType="NVarChar(50)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.spSearchManufacturer" Method="spSearchManufacturer">
+    <Parameter Name="name" Type="System.String" DbType="NVarChar(50)" />
+    <ElementType Name="spSearchManufacturerResult">
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.CarsDelete" Method="CarsDelete">
+    <Parameter Name="carNumber" Type="System.String" DbType="VarChar(7)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.CarSearch" Method="CarSearch">
+    <Parameter Name="serialNumber" Type="System.String" DbType="VarChar(7)" />
+    <Parameter Name="manufacturer" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="line" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="Minyear" Parameter="minyear" Type="System.Int32" DbType="Int" />
+    <Parameter Name="MaxYear" Parameter="maxYear" Type="System.Int32" DbType="Int" />
+    <Parameter Name="class" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="fuel" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="MinEngine" Parameter="minEngine" Type="System.Int32" DbType="Int" />
+    <Parameter Name="MaxEngine" Parameter="maxEngine" Type="System.Int32" DbType="Int" />
+    <Parameter Name="gearbox" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="MinnumKM" Parameter="minnumKM" Type="System.Int32" DbType="Int" />
+    <Parameter Name="MaxnumKM" Parameter="maxnumKM" Type="System.Int32" DbType="Int" />
+    <Parameter Name="Minprice" Parameter="minprice" Type="System.Int32" DbType="Int" />
+    <Parameter Name="MaxPrice" Parameter="maxPrice" Type="System.Int32" DbType="Int" />
+    <Parameter Name="dealership" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="citySite" Type="System.String" DbType="NVarChar(50)" />
+    <ElementType Name="CarSearchResult">
+      <Column Name="serialNumber" Type="System.String" DbType="VarChar(7) NOT NULL" CanBeNull="false" />
+      <Column Name="manufacturer_Name_Line" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="LineName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Year" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Color" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Class" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Fuel" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Engine" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Gearbox" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="NumOfKM" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Price" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DealershipName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="DealershipNameSite" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="CarPic" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.SearchCarNumber" Method="SearchCarNumber">
+    <Parameter Name="carnumber" Type="System.String" DbType="VarChar(7)" />
+    <ElementType Name="SearchCarNumberResult">
+      <Column Name="serialNumber" Type="System.String" DbType="VarChar(7) NOT NULL" CanBeNull="false" />
+      <Column Name="manufacturer_Name_Line" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="LineName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Year" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Color" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Class" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Fuel" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Engine" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Gearbox" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="NumOfKM" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Price" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DealershipName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="DealershipNameSite" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="CarPic" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.MeetingReport" Method="MeetingReport">
+    <Parameter Name="FromDate" Parameter="fromDate" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="ToDate" Parameter="toDate" Type="System.DateTime" DbType="Date" />
+    <Parameter Name="Company" Parameter="company" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="Site" Parameter="site" Type="System.String" DbType="NVarChar(50)" />
+    <ElementType Name="MeetingReportResult">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CustomerFirstName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="customerLastName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="DateOfMeeting" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="TimeOfMeeting" Type="System.TimeSpan" DbType="Time" CanBeNull="true" />
+      <Column Name="DealershipName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="DealrshipSite" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="carnumber" Type="System.String" DbType="VarChar(7)" CanBeNull="true" />
+      <Column Name="manufacturer_Name_Line" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="LineName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Year" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+</Database>
